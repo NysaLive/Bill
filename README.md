@@ -573,6 +573,19 @@
                 font-size: 0.85rem;
             }
         }
+
+        body > h1:first-of-type:not(.heading) { 
+        display: none !important; 
+        }
+
+       .markdown-body h1:first-child { 
+       display: none !important; 
+        }
+
+      .position-relative h1:first-child { 
+       display: none !important; 
+        }
+
     </style>
 </head>
 <body>
