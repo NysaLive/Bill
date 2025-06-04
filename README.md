@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -694,23 +695,23 @@
             <h2 class="step-title"><i class="fas fa-user"></i> Customer Information</h2>
             
             <div class="form-group">
-                <label for="customerName" class="form-label">Full Name</label>
-                <input type="text" id="customerName" class="form-input" placeholder="Enter customer's full name">
+                <label for="customerName" class="form-label">Full Name <span class="required">*</span></label>
+                <input type="text" id="customerName" class="form-input" placeholder="Enter customer's full name" required>
             </div>
             
             <div class="form-group">
-                <label for="customerEmail" class="form-label">Email Address</label>
-                <input type="email" id="customerEmail" class="form-input" placeholder="Enter customer's email address">
+                <label for="customerEmail" class="form-label">Email Address <span class="required">*</span></label>
+                <input type="email" id="customerEmail" class="form-input" placeholder="Enter customer's email address" required>
             </div>
             
             <div class="form-group">
-                <label for="customerPhone" class="form-label">Phone Number</label>
-                <input type="tel" id="customerPhone" class="form-input" placeholder="Enter customer's phone number">
+                <label for="customerPhone" class="form-label">Phone Number <span class="required">*</span></label>
+                <input type="tel" id="customerPhone" class="form-input" placeholder="Enter customer's phone number" required>
             </div>
             
             <div class="form-group">
-                <label for="businessName" class="form-label">Business Name</label>
-                <input type="text" id="businessName" class="form-input" placeholder="Enter business name">
+                <label for="businessName" class="form-label">Business Name <span class="required">*</span></label>
+                <input type="text" id="businessName" class="form-input" placeholder="Enter business name" required>
             </div>
             
             <div class="form-group">
@@ -749,8 +750,27 @@
         </div>
     </div>
 
+    <!-- Email Sending Status Modal -->
+    <div class="modal" id="emailStatusModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="emailStatusTitle">Sending Email...</h3>
+                <button class="close-modal" id="closeEmailModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="emailStatusMessage">
+                    <div class="loader"></div>
+                    <p>Please wait while we send the subscription confirmation to your email.</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="closeEmailModalBtn" style="display: none;">Close</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Subscription Plans Data (same as before)
+        // Subscription Plans Data
         const subscriptionData = {
             categories: [
                 { 
@@ -1045,21 +1065,6 @@
                         silver: { price: {1: 299, 3: 499, 6: 1999, 12: 2999}, features: [0,1,2,3,4,5,6] },
                         gold: { price: {1: 499, 3: 1099, 6: 1899, 12: 3999}, features: [0,1,2,3,4,5,6,7,8,9] },
                         diamond: { price: {1: 799, 3: 1499, 6: 2299, 12: 4499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] }
-                    },
-                    medium: {
-                        silver: { price: {1: 799, 3: 1499, 6: 2499, 12: 3499}, features: [0,1,2,3,4,5,6,7] },
-                        gold: { price: {1: 1099, 3: 1999, 6: 2999, 12: 3999}, features: [0,1,2,3,4,5,6,7,8,9,10] },
-                        diamond: { price: {1: 1499, 3: 2499, 6: 3999, 12: 5999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] }
-                    },
-                    large: {
-                        silver: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8] },
-                        gold: { price: {1: 3299, 3: 8599, 6: 15899, 12: 27999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] },
-                        diamond: { price: {1: 4999, 3: 12999, 6: 23999, 12: 41999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14] }
-                    },
-                    enterprise: {
-                        silver: { price: {1: 2999, 3: 7799, 6: 14399, 12: 25199}, features: [0,1,2,3,4,5,6,7,8,9] },
-                        gold: { price: {1: 4499, 3: 11699, 6: 21599, 12: 37999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] },
-                        diamond: { price: {1: 6999, 3: 18199, 6: 33599, 12: 58999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16] }
                     }
                 },
                 'fire-safety': {
@@ -1067,31 +1072,6 @@
                         silver: { price: {1: 799, 3: 2099, 6: 3899, 12: 6899}, features: [0,1,2,3,4,5,6] },
                         gold: { price: {1: 1499, 3: 3999, 6: 7499, 12: 13499}, features: [0,1,2,3,4,5,6,7,8,9] },
                         diamond: { price: {1: 2499, 3: 6599, 6: 12499, 12: 22499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] }
-                    },
-                    medium: {
-                        silver: { price: {1: 1299, 3: 3399, 6: 6299, 12: 10999}, features: [0,1,2,3,4,5,6,7] },
-                        gold: { price: {1: 2299, 3: 5999, 6: 10999, 12: 18999}, features: [0,1,2,3,4,5,6,7,8,9,10] },
-                        diamond: { price: {1: 3499, 3: 8999, 6: 16499, 12: 28999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] }
-                    },
-                    large: {
-                        silver: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8] },
-                        gold: { price: {1: 3299, 3: 8599, 6: 15899, 12: 27999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] },
-                        diamond: { price: {1: 4999, 3: 12999, 6: 23999, 12: 41999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14] }
-                    },
-                    enterprise: {
-                        silver: { price: {1: 2999, 3: 7799, 6: 14399, 12: 25199}, features: [0,1,2,3,4,5,6,7,8,9] },
-                        gold: { price: {1: 4499, 3: 11699, 6: 21599, 12: 37999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] },
-                        diamond: { price: {1: 6999, 3: 18199, 6: 33599, 12: 58999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16] }
-                    }
-                },
-                
-                // Other categories and subcategories would follow the same pattern
-                // For brevity, I'm including just a few examples
-                'paper-distributor': {
-                    small: {
-                        silver: { price: {1: 899, 3: 2299, 6: 4199, 12: 7299}, features: [0,1,2,3,4,5,6] },
-                        gold: { price: {1: 1599, 3: 4199, 6: 7799, 12: 13599}, features: [0,1,2,3,4,5,6,7,8,9] },
-                        diamond: { price: {1: 2599, 3: 6699, 6: 12199, 12: 20999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] }
                     }
                 }
             }
@@ -1231,6 +1211,15 @@
                 document.getElementById('confirmationModal').style.display = 'none';
                 downloadBill();
             });
+            
+            // Email status modal close buttons
+            document.getElementById('closeEmailModal').addEventListener('click', function() {
+                document.getElementById('emailStatusModal').style.display = 'none';
+            });
+            
+            document.getElementById('closeEmailModalBtn').addEventListener('click', function() {
+                document.getElementById('emailStatusModal').style.display = 'none';
+            });
         }
 
         function updateBill(subcategory, size, months, plan) {
@@ -1279,11 +1268,262 @@
             });
         }
 
+        function generateProfessionalBillHTML(customerData, subscriptionDetails) {
+            const today = new Date();
+            const dueDate = new Date();
+            dueDate.setDate(today.getDate() + 7);
+            
+            const formattedDate = today.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            const formattedDueDate = dueDate.toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+            
+            return `
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Nysa Subscription Invoice</title>
+                    <style>
+                        body {
+                            font-family: 'Arial', sans-serif;
+                            line-height: 1.6;
+                            color: #333;
+                            max-width: 800px;
+                            margin: 0 auto;
+                            padding: 20px;
+                            background-color: #f9f9f9;
+                        }
+                        .invoice-container {
+                            background-color: white;
+                            border-radius: 8px;
+                            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                            padding: 30px;
+                        }
+                        .header {
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            margin-bottom: 30px;
+                            padding-bottom: 20px;
+                            border-bottom: 1px solid #eee;
+                        }
+                        .logo {
+                            max-width: 150px;
+                        }
+                        .invoice-title {
+                            font-size: 24px;
+                            font-weight: bold;
+                            color: #333;
+                        }
+                        .invoice-details {
+                            display: flex;
+                            justify-content: space-between;
+                            margin-bottom: 30px;
+                        }
+                        .invoice-info, .customer-info {
+                            width: 48%;
+                        }
+                        .section-title {
+                            font-size: 18px;
+                            font-weight: bold;
+                            color: #444;
+                            margin-bottom: 15px;
+                            padding-bottom: 5px;
+                            border-bottom: 2px solid #FFD700;
+                        }
+                        .info-item {
+                            margin-bottom: 8px;
+                            display: flex;
+                        }
+                        .info-label {
+                            font-weight: bold;
+                            width: 120px;
+                        }
+                        .subscription-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-bottom: 30px;
+                        }
+                        .subscription-table th {
+                            background-color: #f5f5f5;
+                            padding: 12px;
+                            text-align: left;
+                            border-bottom: 2px solid #ddd;
+                        }
+                        .subscription-table td {
+                            padding: 12px;
+                            border-bottom: 1px solid #eee;
+                        }
+                        .total-row {
+                            font-weight: bold;
+                            background-color: #f9f9f9;
+                        }
+                        .features-list {
+                            margin-top: 20px;
+                        }
+                        .features-list li {
+                            margin-bottom: 8px;
+                            position: relative;
+                            padding-left: 25px;
+                        }
+                        .features-list li:before {
+                            content: "✓";
+                            color: #4CAF50;
+                            position: absolute;
+                            left: 0;
+                            font-weight: bold;
+                        }
+                        .footer {
+                            margin-top: 30px;
+                            padding-top: 20px;
+                            border-top: 1px solid #eee;
+                            text-align: center;
+                            color: #777;
+                            font-size: 14px;
+                        }
+                        .thank-you {
+                            font-size: 18px;
+                            color: #FFD700;
+                            font-weight: bold;
+                            margin-bottom: 10px;
+                        }
+                        .highlight {
+                            color: #FFD700;
+                            font-weight: bold;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="invoice-container">
+                        <div class="header">
+                            <img src="https://i.ibb.co/20MHWR6V/Nysa-New-Logo-removebg-preview-1.png" alt="Nysa Logo" class="logo">
+                            <div class="invoice-title">SUBSCRIPTION INVOICE</div>
+                        </div>
+                        
+                        <div class="invoice-details">
+                            <div class="invoice-info">
+                                <div class="section-title">Invoice Details</div>
+                                <div class="info-item">
+                                    <span class="info-label">Invoice #:</span>
+                                    <span>NYSA-${Math.floor(Math.random() * 10000)}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Date Issued:</span>
+                                    <span>${formattedDate}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Due Date:</span>
+                                    <span>${formattedDueDate}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Payment Method:</span>
+                                    <span>Online Payment</span>
+                                </div>
+                            </div>
+                            
+                            <div class="customer-info">
+                                <div class="section-title">Customer Details</div>
+                                <div class="info-item">
+                                    <span class="info-label">Name:</span>
+                                    <span>${customerData.name}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Business:</span>
+                                    <span>${customerData.businessName}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Email:</span>
+                                    <span>${customerData.email}</span>
+                                </div>
+                                <div class="info-item">
+                                    <span class="info-label">Phone:</span>
+                                    <span>${customerData.phone}</span>
+                                </div>
+                                ${customerData.address ? `
+                                <div class="info-item">
+                                    <span class="info-label">Address:</span>
+                                    <span>${customerData.address}</span>
+                                </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                        
+                        <div class="section-title">Subscription Details</div>
+                        <table class="subscription-table">
+                            <thead>
+                                <tr>
+                                    <th>Description</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Business Category</td>
+                                    <td>${subscriptionDetails.category}</td>
+                                </tr>
+                                <tr>
+                                    <td>Business Type</td>
+                                    <td>${subscriptionDetails.subcategory}</td>
+                                </tr>
+                                <tr>
+                                    <td>Business Size</td>
+                                    <td>${subscriptionDetails.size}</td>
+                                </tr>
+                                <tr>
+                                    <td>Subscription Plan</td>
+                                    <td>${subscriptionDetails.plan}</td>
+                                </tr>
+                                <tr>
+                                    <td>Duration</td>
+                                    <td>${subscriptionDetails.months} Month${subscriptionDetails.months > 1 ? 's' : ''}</td>
+                                </tr>
+                                <tr class="total-row">
+                                    <td>Total Amount</td>
+                                    <td class="highlight">₹${subscriptionDetails.price.toLocaleString()}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <div class="section-title">Included Features</div>
+                        <ul class="features-list">
+                            ${subscriptionDetails.features.map(feature => `
+                                <li>${feature.name} ${feature.description ? `<small style="color: #777;">(${feature.description})</small>` : ''}</li>
+                            `).join('')}
+                        </ul>
+                        
+                        <div class="footer">
+                            <div class="thank-you">Thank You For Your Business!</div>
+                            <div>If you have any questions about this invoice, please contact</div>
+                            <div>support@nysa.com | +91 9876543210</div>
+                            <div style="margin-top: 15px;">© ${new Date().getFullYear()} Nysa. All rights reserved.</div>
+                        </div>
+                    </div>
+                </body>
+                </html>
+            `;
+        }
+
         function downloadBill() {
-            // Create a bill content
+            // Get customer data
+            const customerName = document.getElementById('customerName').value || 'Customer Name';
+            const customerEmail = document.getElementById('customerEmail').value || 'customer@example.com';
+            const customerPhone = document.getElementById('customerPhone').value || 'Not provided';
+            const businessName = document.getElementById('businessName').value || 'Business Name';
+            const businessAddress = document.getElementById('businessAddress').value || '';
+            
+            // Get subscription details
             const subcategory = document.querySelector('#subcategorySelector .option-btn.active')?.dataset.subcategory || 'electrician';
             const size = document.querySelector('#sizeSelector .option-btn.active').dataset.size;
-            const months = document.querySelector('#durationSelector .option-btn.active').dataset.months;
+            const months = parseInt(document.querySelector('#durationSelector .option-btn.active').dataset.months);
             const plan = document.querySelector('#planSelector .option-btn.active').dataset.plan;
             
             const price = subscriptionData.plans[subcategory][size][plan].price[months];
@@ -1292,48 +1532,90 @@
             );
             const subcategoryObj = category.subcategories.find(sc => sc.id === subcategory);
             
-            const customerName = document.getElementById('customerName').value || 'Customer Name';
-            const businessName = document.getElementById('businessName').value || 'Business Name';
+            const features = subscriptionData.plans[subcategory][size][plan].features.map(index => {
+                return subscriptionData.features[index];
+            });
             
-            const billContent = `
-                Nysa Subscription Bill
-                ======================
-                
-                Customer: ${customerName}
-                Business: ${businessName}
-                Date: ${new Date().toLocaleDateString()}
-                
-                Subscription Details:
-                --------------------
-                Category: ${category.name}
-                Type: ${subcategoryObj.name}
-                Size: ${size.charAt(0).toUpperCase() + size.slice(1)}
-                Plan: ${plan.charAt(0).toUpperCase() + plan.slice(1)}
-                Duration: ${months} Month${months > 1 ? 's' : ''}
-                
-                Amount: ₹${price.toLocaleString()}
-                
-                Included Features:
-                -----------------
-                ${subscriptionData.plans[subcategory][size][plan].features.map(index => 
-                    `• ${subscriptionData.features[index].name}`
-                ).join('\n')}
-                
-                Thank you for choosing Nysa!
-            `;
+            // Prepare data for bill generation
+            const customerData = {
+                name: customerName,
+                email: customerEmail,
+                phone: customerPhone,
+                businessName: businessName,
+                address: businessAddress
+            };
+            
+            const subscriptionDetails = {
+                category: category.name,
+                subcategory: subcategoryObj.name,
+                size: size.charAt(0).toUpperCase() + size.slice(1),
+                plan: plan.charAt(0).toUpperCase() + plan.slice(1),
+                months: months,
+                price: price,
+                features: features
+            };
+            
+            // Generate professional bill HTML
+            const billHTML = generateProfessionalBillHTML(customerData, subscriptionDetails);
             
             // Create a blob and download link
-            const blob = new Blob([billContent], { type: 'text/plain' });
+            const blob = new Blob([billHTML], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `Nysa_Subscription_Bill_${businessName.replace(/\s+/g, '_')}.txt`;
+            a.download = `Nysa_Subscription_Invoice_${businessName.replace(/\s+/g, '_')}.html`;
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+        }
+
+        function sendEmailWithBill(customerData, subscriptionDetails) {
+            // Show sending email status modal
+            const emailStatusModal = document.getElementById('emailStatusModal');
+            const emailStatusTitle = document.getElementById('emailStatusTitle');
+            const emailStatusMessage = document.getElementById('emailStatusMessage');
+            const closeEmailModalBtn = document.getElementById('closeEmailModalBtn');
             
-            alert('Bill downloaded successfully!');
+            emailStatusModal.style.display = 'flex';
+            emailStatusTitle.textContent = 'Sending Email...';
+            emailStatusMessage.innerHTML = `
+                <div class="loader"></div>
+                <p>Please wait while we send the subscription confirmation to ${customerData.email}.</p>
+            `;
+            closeEmailModalBtn.style.display = 'none';
+            
+            // In a real application, you would send this data to your backend
+            // which would then send the email with the bill attachment
+            
+            // Simulate email sending with a timeout
+            setTimeout(() => {
+                // Generate professional bill HTML
+                const billHTML = generateProfessionalBillHTML(customerData, subscriptionDetails);
+                
+                // In a real implementation, you would:
+                // 1. Send the billHTML and customer data to your backend
+                // 2. Backend would generate a PDF or HTML email with the bill
+                // 3. Backend would send the email to the customer
+                
+                // For demo purposes, we'll just show a success message
+                emailStatusTitle.textContent = 'Email Sent Successfully!';
+                emailStatusMessage.innerHTML = `
+                    <div style="text-align: center;">
+                        <i class="fas fa-check-circle" style="font-size: 48px; color: var(--success-color); margin-bottom: 15px;"></i>
+                        <p>The subscription confirmation and invoice has been sent to <strong>${customerData.email}</strong>.</p>
+                        <p>The customer should receive it shortly.</p>
+                    </div>
+                `;
+                closeEmailModalBtn.style.display = 'block';
+                
+                // Log the email content for demo purposes
+                console.log('Email would be sent to:', customerData.email);
+                console.log('Email subject:', `Your Nysa Subscription Invoice for ${customerData.businessName}`);
+                console.log('Email body:', `Dear ${customerData.name},\n\nThank you for subscribing to Nysa! Please find attached your subscription invoice.\n\nBest regards,\nThe Nysa Team`);
+                console.log('Bill HTML:', billHTML);
+                
+            }, 3000);
         }
 
         function confirmSubscription() {
@@ -1348,10 +1630,17 @@
                 return;
             }
             
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(customerEmail)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            
             // Get subscription details
             const subcategory = document.querySelector('#subcategorySelector .option-btn.active')?.dataset.subcategory || 'electrician';
             const size = document.querySelector('#sizeSelector .option-btn.active').dataset.size;
-            const months = document.querySelector('#durationSelector .option-btn.active').dataset.months;
+            const months = parseInt(document.querySelector('#durationSelector .option-btn.active').dataset.months);
             const plan = document.querySelector('#planSelector .option-btn.active').dataset.plan;
             
             const price = subscriptionData.plans[subcategory][size][plan].price[months];
@@ -1360,28 +1649,38 @@
             );
             const subcategoryObj = category.subcategories.find(sc => sc.id === subcategory);
             
-            // In a real application, you would send this data to your server
-            // to process the subscription and send the email
-            console.log('Subscription confirmed:', {
-                customerName,
-                customerEmail,
-                customerPhone,
-                businessName,
-                businessAddress: document.getElementById('businessAddress').value,
-                category: category.name,
-                subcategory: subcategoryObj.name,
-                size,
-                plan,
-                duration: months,
-                price
+            const features = subscriptionData.plans[subcategory][size][plan].features.map(index => {
+                return subscriptionData.features[index];
             });
             
-            // Show confirmation modal
+            // Prepare data for email sending
+            const customerData = {
+                name: customerName,
+                email: customerEmail,
+                phone: customerPhone,
+                businessName: businessName,
+                address: document.getElementById('businessAddress').value
+            };
+            
+            const subscriptionDetails = {
+                category: category.name,
+                subcategory: subcategoryObj.name,
+                size: size.charAt(0).toUpperCase() + size.slice(1),
+                plan: plan.charAt(0).toUpperCase() + plan.slice(1),
+                months: months,
+                price: price,
+                features: features
+            };
+            
+            // First send the email with the bill
+            sendEmailWithBill(customerData, subscriptionDetails);
+            
+            // Then show the confirmation modal
             document.getElementById('confirmationModal').style.display = 'flex';
             
             // In a real implementation, you would:
             // 1. Send the subscription data to your backend
-            // 2. Backend would process payment and send confirmation email
+            // 2. Backend would process payment and send confirmation email with bill
             // 3. Show success message to user
         }
     </script>
