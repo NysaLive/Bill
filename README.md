@@ -4196,19 +4196,17 @@
             .logo {
                 margin-bottom: 0;
             }
-           .invoice-title {
-            font-size: 14px;
-            font-weight: bold;
-            color: #333;
-            margin: 0;
-        }
-
         }
         .invoice-title {
-            font-size: 24px;
+            font-size: 20px; /* Default size for mobile */
             font-weight: bold;
             color: #333;
             margin: 0;
+        }
+        @media (min-width: 768px) {
+            .invoice-title {
+                font-size: 24px; /* Larger size for desktop */
+            }
         }
         .invoice-details {
             display: flex;
