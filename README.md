@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -340,6 +339,35 @@
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.2);
+        }
+
+        /* Payment Method Selector */
+        .payment-methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: 0.8rem 1.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-method i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .payment-method.active {
+            background: rgba(255, 215, 0, 0.2);
+            border-color: var(--primary-color);
         }
 
         /* Action Buttons */
@@ -719,6 +747,33 @@
                 <textarea id="businessAddress" class="form-input" rows="3" placeholder="Enter business address"></textarea>
             </div>
             
+            <!-- Payment Method Selection -->
+            <div class="form-group">
+                <label class="form-label">Payment Method <span class="required">*</span></label>
+                <div class="payment-methods" id="paymentMethods">
+                    <div class="payment-method active" data-method="online">
+                        <i class="fas fa-credit-card"></i>
+                        <span>Online Payment</span>
+                    </div>
+                    <div class="payment-method" data-method="cash">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Cash</span>
+                    </div>
+                    <div class="payment-method" data-method="bank-transfer">
+                        <i class="fas fa-university"></i>
+                        <span>Bank Transfer</span>
+                    </div>
+                    <div class="payment-method" data-method="cheque">
+                        <i class="fas fa-money-check"></i>
+                        <span>Cheque</span>
+                    </div>
+                    <div class="payment-method" data-method="upi">
+                        <i class="fas fa-mobile-alt"></i>
+                        <span>UPI</span>
+                    </div>
+                </div>
+            </div>
+            
             <div class="action-buttons">
                 <button class="btn btn-secondary" id="downloadBill">
                     <i class="fas fa-download"></i> Download Bill
@@ -968,119 +1023,229 @@
                 { name: "Dedicated Account Manager", description: "Personal account manager to help you grow" }
             ],
             
-            plans: {
-                // Service Providers Plans
-                'electrician': {
-                    small: {
-                        silver: { price: {1: 299, 3: 499, 6: 899, 12: 1599}, features: [0,1,2,3,4] },
-                        gold: { price: {1: 499, 3: 1299, 6: 2399, 12: 4199}, features: [0,1,2,3,4,5,6,7] },
-                        diamond: { price: {1: 999, 3: 2699, 6: 4999, 12: 8999}, features: [0,1,2,3,4,5,6,7,8,9,10] }
-                    },
-                    medium: {
-                        silver: { price: {1: 399, 3: 999, 6: 1799, 12: 3199}, features: [0,1,2,3,4,5] },
-                        gold: { price: {1: 799, 3: 2099, 6: 3899, 12: 6899}, features: [0,1,2,3,4,5,6,7,8,9] },
-                        diamond: { price: {1: 1499, 3: 3999, 6: 7499, 12: 12999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] }
-                    },
-                    large: {
-                        silver: { price: {1: 699, 3: 1799, 6: 3299, 12: 5899}, features: [0,1,2,3,4,5,6,7] },
-                        gold: { price: {1: 1299, 3: 3399, 6: 6299, 12: 10999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] },
-                        diamond: { price: {1: 2299, 3: 5999, 6: 10999, 12: 18999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] }
-                    },
-                    enterprise: {
-                        silver: { price: {1: 1199, 3: 3099, 6: 5699, 12: 9999}, features: [0,1,2,3,4,5,6,7,8] },
-                        gold: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] },
-                        diamond: { price: {1: 3499, 3: 8999, 6: 16499, 12: 28999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] }
-                    }
-                },
-                'plumber': {
-                    small: {
-                        silver: { price: {1: 299, 3: 499, 6: 899, 12: 1599}, features: [0,1,2,3,4] },
-                        gold: { price: {1: 499, 3: 1299, 6: 2399, 12: 4199}, features: [0,1,2,3,4,5,6,7] },
-                        diamond: { price: {1: 999, 3: 2699, 6: 4999, 12: 8999}, features: [0,1,2,3,4,5,6,7,8,9,10] }
-                    },
-                    medium: {
-                        silver: { price: {1: 399, 3: 999, 6: 1799, 12: 3199}, features: [0,1,2,3,4,5] },
-                        gold: { price: {1: 799, 3: 2099, 6: 3899, 12: 6899}, features: [0,1,2,3,4,5,6,7,8,9] },
-                        diamond: { price: {1: 1499, 3: 3999, 6: 7499, 12: 12999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] }
-                    },
-                    large: {
-                        silver: { price: {1: 699, 3: 1799, 6: 3299, 12: 5899}, features: [0,1,2,3,4,5,6,7] },
-                        gold: { price: {1: 1299, 3: 3399, 6: 6299, 12: 10999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] },
-                        diamond: { price: {1: 2299, 3: 5999, 6: 10999, 12: 18999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] }
-                    },
-                    enterprise: {
-                        silver: { price: {1: 1199, 3: 3099, 6: 5699, 12: 9999}, features: [0,1,2,3,4,5,6,7,8] },
-                        gold: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] },
-                        diamond: { price: {1: 3499, 3: 8999, 6: 16499, 12: 28999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] }
-                    }
-                },
-                'bhajan-mandli': {
-                    small: {
-                        silver: { price: {1: 399, 3: 999, 6: 1899, 12: 3499}, features: [0,1,2,3,4,5,6] },
-                        gold: { price: {1: 799, 3: 2099, 6: 3999, 12: 7199}, features: [0,1,2,3,4,5,6,7,8,9] },
-                        diamond: { price: {1: 1499, 3: 3999, 6: 7499, 12: 13499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] }
-                    },
-                    medium: {
-                        silver: { price: {1: 699, 3: 1799, 6: 3399, 12: 6099}, features: [0,1,2,3,4,5,6,7] },
-                        gold: { price: {1: 1299, 3: 3399, 6: 6299, 12: 11199}, features: [0,1,2,3,4,5,6,7,8,9,10,11] },
-                        diamond: { price: {1: 2299, 3: 5999, 6: 10999, 12: 19499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14] }
-                    },
-                    large: {
-                        silver: { price: {1: 1199, 3: 3099, 6: 5799, 12: 10399}, features: [0,1,2,3,4,5,6,7,8] },
-                        gold: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] },
-                        diamond: { price: {1: 3499, 3: 8999, 6: 16499, 12: 28999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] }
-                    },
-                    enterprise: {
-                        silver: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8,9,10] },
-                        gold: { price: {1: 3299, 3: 8499, 6: 15499, 12: 27499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] },
-                        diamond: { price: {1: 5499, 3: 13999, 6: 25499, 12: 44999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18] }
-                    }
-                },
-                
-                // Stores Plans
-                'jewelry': {
-                    small: {
-                        silver: { price: {1: 799, 3: 1999, 6: 2999, 12: 6899}, features: [0,1,2,3,4,5,6] },
-                        gold: { price: {1: 1299, 3: 3999, 6: 7499, 12: 13499}, features: [0,1,2,3,4,5,6,7,8,9] },
-                        diamond: { price: {1: 1999, 3: 6599, 6: 12499, 12: 22499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] }
-                    },
-                    medium: {
-                        silver: { price: {1: 1299, 3: 3399, 6: 6299, 12: 10999}, features: [0,1,2,3,4,5,6,7] },
-                        gold: { price: {1: 2299, 3: 5999, 6: 10999, 12: 18999}, features: [0,1,2,3,4,5,6,7,8,9,10] },
-                        diamond: { price: {1: 3499, 3: 8999, 6: 16499, 12: 28999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] }
-                    },
-                    large: {
-                        silver: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8] },
-                        gold: { price: {1: 3299, 3: 8599, 6: 15899, 12: 27999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] },
-                        diamond: { price: {1: 4999, 3: 12999, 6: 23999, 12: 41999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14] }
-                    },
-                    enterprise: {
-                        silver: { price: {1: 2999, 3: 7799, 6: 14399, 12: 25199}, features: [0,1,2,3,4,5,6,7,8,9] },
-                        gold: { price: {1: 4499, 3: 11699, 6: 21599, 12: 37999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] },
-                        diamond: { price: {1: 6999, 3: 18199, 6: 33599, 12: 58999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16] }
-                    }
-                },
-                'grocery': {
-                    small: {
-                        silver: { price: {1: 299, 3: 499, 6: 1999, 12: 2999}, features: [0,1,2,3,4,5,6] },
-                        gold: { price: {1: 499, 3: 1099, 6: 1899, 12: 3999}, features: [0,1,2,3,4,5,6,7,8,9] },
-                        diamond: { price: {1: 799, 3: 1499, 6: 2299, 12: 4499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] }
-                    }
-                },
-                'fire-safety': {
-                    small: {
-                        silver: { price: {1: 799, 3: 2099, 6: 3899, 12: 6899}, features: [0,1,2,3,4,5,6] },
-                        gold: { price: {1: 1499, 3: 3999, 6: 7499, 12: 13499}, features: [0,1,2,3,4,5,6,7,8,9] },
-                        diamond: { price: {1: 2499, 3: 6599, 6: 12499, 12: 22499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] }
-                    }
-                }
+    plans: {
+    // Service Providers Plans
+    'electrician': {
+        small: {
+            silver: { price: {1: 299, 3: 499, 6: 899, 12: 1599}, features: [0,1,2,3,4] },
+            gold: { price: {1: 499, 3: 1299, 6: 2399, 12: 4199}, features: [0,1,2,3,4,5,6,7] },
+            diamond: { price: {1: 999, 3: 2699, 6: 4999, 12: 8999}, features: [0,1,2,3,4,5,6,7,8,9,10] }
+        },
+        medium: {
+            silver: { price: {1: 399, 3: 999, 6: 1799, 12: 3199}, features: [0,1,2,3,4,5] },
+            gold: { price: {1: 799, 3: 2099, 6: 3899, 12: 6899}, features: [0,1,2,3,4,5,6,7,8,9] },
+            diamond: { price: {1: 1499, 3: 3999, 6: 7499, 12: 12999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] }
+        },
+        large: {
+            silver: { price: {1: 699, 3: 1799, 6: 3299, 12: 5899}, features: [0,1,2,3,4,5,6,7] },
+            gold: { price: {1: 1299, 3: 3399, 6: 6299, 12: 10999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] },
+            diamond: { price: {1: 2299, 3: 5999, 6: 10999, 12: 18999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] }
+        },
+        enterprise: {
+            silver: { price: {1: 1199, 3: 3099, 6: 5699, 12: 9999}, features: [0,1,2,3,4,5,6,7,8] },
+            gold: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] },
+            diamond: { price: {1: 3499, 3: 8999, 6: 16499, 12: 28999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] }
+        }
+    },
+        'bhajan-mandli': {
+            small: {
+            silver: { price: {1: 399, 3: 999, 6: 1899, 12: 3499}, features: [0,1,2,3,4,5,6] },
+            gold: { price: {1: 599, 3: 2099, 6: 3999, 12: 7199}, features: [0,1,2,3,4,5,6,7,8,9] },
+            diamond: { price: {1: 999, 3: 3999, 6: 7499, 12: 13499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] }
+        },
+        medium: {
+            silver: { price: {1: 699, 3: 1799, 6: 3399, 12: 6099}, features: [0,1,2,3,4,5,6,7] },
+            gold: { price: {1: 1299, 3: 3399, 6: 6299, 12: 11199}, features: [0,1,2,3,4,5,6,7,8,9,10,11] },
+            diamond: { price: {1: 2299, 3: 5999, 6: 10999, 12: 19499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14] }
+        },
+        large: {
+            silver: { price: {1: 1199, 3: 3099, 6: 5799, 12: 10399}, features: [0,1,2,3,4,5,6,7,8] },
+            gold: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] },
+            diamond: { price: {1: 3499, 3: 8999, 6: 16499, 12: 28999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] }
+        },
+        enterprise: {
+            silver: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8,9,10] },
+            gold: { price: {1: 3299, 3: 8499, 6: 15499, 12: 27499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15] },
+            diamond: { price: {1: 5499, 3: 13999, 6: 25499, 12: 44999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18] }
+        }
+    },
+        
+        // Stores Plans
+        'jewelry': {
+            small: {
+            silver: { price: {1: 799, 3: 1999, 6: 2999, 12: 6899}, features: [0,1,2,3,4,5,6] },
+            gold: { price: {1: 1299, 3: 3999, 6: 7499, 12: 13499}, features: [0,1,2,3,4,5,6,7,8,9] },
+            diamond: { price: {1: 1999, 3: 6599, 6: 12499, 12: 22499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] }
+        },
+        medium: {
+            silver: { price: {1: 1299, 3: 3399, 6: 6299, 12: 10999}, features: [0,1,2,3,4,5,6,7] },
+            gold: { price: {1: 2299, 3: 5999, 6: 10999, 12: 18999}, features: [0,1,2,3,4,5,6,7,8,9,10] },
+            diamond: { price: {1: 3499, 3: 8999, 6: 16499, 12: 28999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] }
+        },
+        large: {
+            silver: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8] },
+            gold: { price: {1: 3299, 3: 8599, 6: 15899, 12: 27999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] },
+            diamond: { price: {1: 4999, 3: 12999, 6: 23999, 12: 41999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14] }
+        },
+        enterprise: {
+            silver: { price: {1: 2999, 3: 7799, 6: 14399, 12: 25199}, features: [0,1,2,3,4,5,6,7,8,9] },
+            gold: { price: {1: 4499, 3: 11699, 6: 21599, 12: 37999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] },
+            diamond: { price: {1: 6999, 3: 18199, 6: 33599, 12: 58999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16] }
+        }
+    },
+        'fire-safety': {
+            small: {
+            silver: { price: {1: 799, 3: 2099, 6: 3899, 12: 6899}, features: [0,1,2,3,4,5,6] },
+            gold: { price: {1: 1499, 3: 3999, 6: 7499, 12: 13499}, features: [0,1,2,3,4,5,6,7,8,9] },
+            diamond: { price: {1: 2499, 3: 6599, 6: 12499, 12: 22499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] }
+        },
+        medium: {
+            silver: { price: {1: 1299, 3: 3399, 6: 6299, 12: 10999}, features: [0,1,2,3,4,5,6,7] },
+            gold: { price: {1: 2299, 3: 5999, 6: 10999, 12: 18999}, features: [0,1,2,3,4,5,6,7,8,9,10] },
+            diamond: { price: {1: 3499, 3: 8999, 6: 16499, 12: 28999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] }
+        },
+        large: {
+            silver: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8] },
+            gold: { price: {1: 3299, 3: 8599, 6: 15899, 12: 27999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] },
+            diamond: { price: {1: 4999, 3: 12999, 6: 23999, 12: 41999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14] }
+        },
+        enterprise: {
+            silver: { price: {1: 2999, 3: 7799, 6: 14399, 12: 25199}, features: [0,1,2,3,4,5,6,7,8,9] },
+            gold: { price: {1: 4499, 3: 11699, 6: 21599, 12: 37999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] },
+            diamond: { price: {1: 6999, 3: 18199, 6: 33599, 12: 58999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16] }
+        }
+    },
+        
+        // Public Places Plans
+        'amusement-parks': {
+            small: {
+            silver: { price: {1: 799, 3: 2099, 6: 3899, 12: 6899}, features: [0,1,2,3,4,5,6] },
+            gold: { price: {1: 1499, 3: 3999, 6: 7499, 12: 13499}, features: [0,1,2,3,4,5,6,7,8,9] },
+            diamond: { price: {1: 2499, 3: 6599, 6: 12499, 12: 22499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] }
+        },
+        medium: {
+            silver: { price: {1: 1299, 3: 3399, 6: 6299, 12: 10999}, features: [0,1,2,3,4,5,6,7] },
+            gold: { price: {1: 2299, 3: 5999, 6: 10999, 12: 18999}, features: [0,1,2,3,4,5,6,7,8,9,10] },
+            diamond: { price: {1: 3499, 3: 8999, 6: 16499, 12: 28999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] }
+        },
+        large: {
+            silver: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8] },
+            gold: { price: {1: 3299, 3: 8599, 6: 15899, 12: 27999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] },
+            diamond: { price: {1: 4999, 3: 12999, 6: 23999, 12: 41999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14] }
+        },
+        enterprise: {
+            silver: { price: {1: 2999, 3: 7799, 6: 14399, 12: 25199}, features: [0,1,2,3,4,5,6,7,8,9] },
+            gold: { price: {1: 4499, 3: 11699, 6: 21599, 12: 37999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] },
+            diamond: { price: {1: 6999, 3: 18199, 6: 33599, 12: 58999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16] }
+        }
+    },
+        'gaming-zones': {
+            small: {
+            silver: { price: {1: 799, 3: 2099, 6: 3899, 12: 6899}, features: [0,1,2,3,4,5,6] },
+            gold: { price: {1: 1499, 3: 3999, 6: 7499, 12: 13499}, features: [0,1,2,3,4,5,6,7,8,9] },
+            diamond: { price: {1: 2499, 3: 6599, 6: 12499, 12: 22499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] }
+        },
+        medium: {
+            silver: { price: {1: 1299, 3: 3399, 6: 6299, 12: 10999}, features: [0,1,2,3,4,5,6,7] },
+            gold: { price: {1: 2299, 3: 5999, 6: 10999, 12: 18999}, features: [0,1,2,3,4,5,6,7,8,9,10] },
+            diamond: { price: {1: 3499, 3: 8999, 6: 16499, 12: 28999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] }
+        },
+        large: {
+            silver: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8] },
+            gold: { price: {1: 3299, 3: 8599, 6: 15899, 12: 27999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] },
+            diamond: { price: {1: 4999, 3: 12999, 6: 23999, 12: 41999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14] }
+        },
+        enterprise: {
+            silver: { price: {1: 2999, 3: 7799, 6: 14399, 12: 25199}, features: [0,1,2,3,4,5,6,7,8,9] },
+            gold: { price: {1: 4499, 3: 11699, 6: 21599, 12: 37999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] },
+            diamond: { price: {1: 6999, 3: 18199, 6: 33599, 12: 58999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16] }
+        }
+    },
+        
+        // Real Estate Plans
+        'residential': {
+            small: {
+            silver: { price: {1: 799, 3: 2099, 6: 3899, 12: 6899}, features: [0,1,2,3,4,5,6] },
+            gold: { price: {1: 1499, 3: 3999, 6: 7499, 12: 13499}, features: [0,1,2,3,4,5,6,7,8,9] },
+            diamond: { price: {1: 2499, 3: 6599, 6: 12499, 12: 22499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] }
+        },
+        medium: {
+            silver: { price: {1: 1299, 3: 3399, 6: 6299, 12: 10999}, features: [0,1,2,3,4,5,6,7] },
+            gold: { price: {1: 2299, 3: 5999, 6: 10999, 12: 18999}, features: [0,1,2,3,4,5,6,7,8,9,10] },
+            diamond: { price: {1: 3499, 3: 8999, 6: 16499, 12: 28999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] }
+        },
+        large: {
+            silver: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8] },
+            gold: { price: {1: 3299, 3: 8599, 6: 15899, 12: 27999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] },
+            diamond: { price: {1: 4999, 3: 12999, 6: 23999, 12: 41999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14] }
+        },
+        enterprise: {
+            silver: { price: {1: 2999, 3: 7799, 6: 14399, 12: 25199}, features: [0,1,2,3,4,5,6,7,8,9] },
+            gold: { price: {1: 4499, 3: 11699, 6: 21599, 12: 37999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] },
+            diamond: { price: {1: 6999, 3: 18199, 6: 33599, 12: 58999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16] }
+        }
+    },
+        'passenger-vans': {
+            small: {
+            silver: { price: {1: 799, 3: 2099, 6: 3899, 12: 6899}, features: [0,1,2,3,4,5,6] },
+            gold: { price: {1: 1499, 3: 3999, 6: 7499, 12: 13499}, features: [0,1,2,3,4,5,6,7,8,9] },
+            diamond: { price: {1: 2499, 3: 6599, 6: 12499, 12: 22499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] }
+        },
+        medium: {
+            silver: { price: {1: 1299, 3: 3399, 6: 6299, 12: 10999}, features: [0,1,2,3,4,5,6,7] },
+            gold: { price: {1: 2299, 3: 5999, 6: 10999, 12: 18999}, features: [0,1,2,3,4,5,6,7,8,9,10] },
+            diamond: { price: {1: 3499, 3: 8999, 6: 16499, 12: 28999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] }
+        },
+        large: {
+            silver: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8] },
+            gold: { price: {1: 3299, 3: 8599, 6: 15899, 12: 27999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] },
+            diamond: { price: {1: 4999, 3: 12999, 6: 23999, 12: 41999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14] }
+        },
+        enterprise: {
+            silver: { price: {1: 2999, 3: 7799, 6: 14399, 12: 25199}, features: [0,1,2,3,4,5,6,7,8,9] },
+            gold: { price: {1: 4499, 3: 11699, 6: 21599, 12: 37999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] },
+            diamond: { price: {1: 6999, 3: 18199, 6: 33599, 12: 58999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16] }
+        }
+    },
+        
+        // Distributors & Wholesalers Plans
+        'grocery-distributor': {
+            small: {
+            silver: { price: {1: 799, 3: 2099, 6: 3899, 12: 6899}, features: [0,1,2,3,4,5,6] },
+            gold: { price: {1: 1499, 3: 3999, 6: 7499, 12: 13499}, features: [0,1,2,3,4,5,6,7,8,9] },
+            diamond: { price: {1: 2499, 3: 6599, 6: 12499, 12: 22499}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12] }
+        },
+        medium: {
+            silver: { price: {1: 1299, 3: 3399, 6: 6299, 12: 10999}, features: [0,1,2,3,4,5,6,7] },
+            gold: { price: {1: 2299, 3: 5999, 6: 10999, 12: 18999}, features: [0,1,2,3,4,5,6,7,8,9,10] },
+            diamond: { price: {1: 3499, 3: 8999, 6: 16499, 12: 28999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] }
+        },
+        large: {
+            silver: { price: {1: 1999, 3: 5199, 6: 9599, 12: 16999}, features: [0,1,2,3,4,5,6,7,8] },
+            gold: { price: {1: 3299, 3: 8599, 6: 15899, 12: 27999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] },
+            diamond: { price: {1: 4999, 3: 12999, 6: 23999, 12: 41999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14] }
+        },
+        enterprise: {
+            silver: { price: {1: 2999, 3: 7799, 6: 14399, 12: 25199}, features: [0,1,2,3,4,5,6,7,8,9] },
+            gold: { price: {1: 4499, 3: 11699, 6: 21599, 12: 37999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13] },
+            diamond: { price: {1: 6999, 3: 18199, 6: 33599, 12: 58999}, features: [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16] }
+        }
+    },
+        'paper-distributor': {
+            small: {
+                silver: { price: {1: 899, 3: 2299, 6: 4199, 12: 7299}, features: [0,1,2,3,4,5,6] },
+                gold: { price: {1: 1599, 3: 4199, 6: 7799, 12: 13599}, features: [0,1,2,3,4,5,6,7,8,9] },
+                diamond: { price: {1: 2599, 3: 6699, 6: 12199, 12: 20999}, features: [0,1,2,3,4,5,6,7,8,9,10,11] }
             }
-        };
+        }
+    }
+};
 
         // Initialize the page
         document.addEventListener('DOMContentLoaded', function() {
             populateCategories();
             setupEventListeners();
+            setupPaymentMethodSelection();
             updateBill('electrician', 'medium', 3, 'gold'); // Default selection
         });
 
@@ -1125,6 +1290,17 @@
                 });
                 
                 subcategorySelector.appendChild(subBtn);
+            });
+        }
+
+        function setupPaymentMethodSelection() {
+            const paymentMethods = document.querySelectorAll('.payment-method');
+            
+            paymentMethods.forEach(method => {
+                method.addEventListener('click', function() {
+                    document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('active'));
+                    this.classList.add('active');
+                });
             });
         }
 
@@ -1270,20 +1446,42 @@
 
         function generateProfessionalBillHTML(customerData, subscriptionDetails) {
             const today = new Date();
-            const dueDate = new Date();
-            dueDate.setDate(today.getDate() + 7);
-            
             const formattedDate = today.toLocaleDateString('en-US', { 
                 year: 'numeric', 
                 month: 'long', 
                 day: 'numeric' 
             });
             
-            const formattedDueDate = dueDate.toLocaleDateString('en-US', { 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
-            });
+            // Get payment method details
+            const paymentMethod = document.querySelector('.payment-method.active').dataset.method;
+            let paymentMethodText = '';
+            let paymentIcon = '';
+            
+            switch(paymentMethod) {
+                case 'online':
+                    paymentMethodText = 'Online Payment';
+                    paymentIcon = 'fas fa-credit-card';
+                    break;
+                case 'cash':
+                    paymentMethodText = 'Cash';
+                    paymentIcon = 'fas fa-money-bill-wave';
+                    break;
+                case 'bank-transfer':
+                    paymentMethodText = 'Bank Transfer';
+                    paymentIcon = 'fas fa-university';
+                    break;
+                case 'cheque':
+                    paymentMethodText = 'Cheque';
+                    paymentIcon = 'fas fa-money-check';
+                    break;
+                case 'upi':
+                    paymentMethodText = 'UPI Payment';
+                    paymentIcon = 'fas fa-mobile-alt';
+                    break;
+                default:
+                    paymentMethodText = 'Online Payment';
+                    paymentIcon = 'fas fa-credit-card';
+            }
             
             return `
                 <!DOCTYPE html>
@@ -1326,11 +1524,19 @@
                         }
                         .invoice-details {
                             display: flex;
+                            flex-wrap: wrap;
                             justify-content: space-between;
                             margin-bottom: 30px;
                         }
                         .invoice-info, .customer-info {
-                            width: 48%;
+                            width: 100%;
+                            margin-bottom: 20px;
+                        }
+                        @media (min-width: 768px) {
+                            .invoice-info, .customer-info {
+                                width: 48%;
+                                margin-bottom: 0;
+                            }
                         }
                         .section-title {
                             font-size: 18px;
@@ -1343,10 +1549,16 @@
                         .info-item {
                             margin-bottom: 8px;
                             display: flex;
+                            flex-wrap: wrap;
                         }
                         .info-label {
                             font-weight: bold;
                             width: 120px;
+                            min-width: 120px;
+                        }
+                        .info-value {
+                            flex: 1;
+                            word-break: break-word;
                         }
                         .subscription-table {
                             width: 100%;
@@ -1400,6 +1612,16 @@
                             color: #FFD700;
                             font-weight: bold;
                         }
+                        .payment-method-display {
+                            display: flex;
+                            align-items: center;
+                            margin-top: 5px;
+                        }
+                        .payment-method-display i {
+                            margin-right: 8px;
+                            font-size: 1.2rem;
+                            color: #555;
+                        }
                     </style>
                 </head>
                 <body>
@@ -1414,19 +1636,20 @@
                                 <div class="section-title">Invoice Details</div>
                                 <div class="info-item">
                                     <span class="info-label">Invoice #:</span>
-                                    <span>NYSA-${Math.floor(Math.random() * 10000)}</span>
+                                    <span class="info-value">NYSA-${Math.floor(Math.random() * 10000)}</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="info-label">Date Issued:</span>
-                                    <span>${formattedDate}</span>
-                                </div>
-                                <div class="info-item">
-                                    <span class="info-label">Due Date:</span>
-                                    <span>${formattedDueDate}</span>
+                                    <span class="info-value">${formattedDate}</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="info-label">Payment Method:</span>
-                                    <span>Online Payment</span>
+                                    <div class="info-value">
+                                        <div class="payment-method-display">
+                                            <i class="${paymentIcon}"></i>
+                                            <span>${paymentMethodText}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             
@@ -1434,24 +1657,24 @@
                                 <div class="section-title">Customer Details</div>
                                 <div class="info-item">
                                     <span class="info-label">Name:</span>
-                                    <span>${customerData.name}</span>
+                                    <span class="info-value">${customerData.name}</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="info-label">Business:</span>
-                                    <span>${customerData.businessName}</span>
+                                    <span class="info-value">${customerData.businessName}</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="info-label">Email:</span>
-                                    <span>${customerData.email}</span>
+                                    <span class="info-value" style="word-break: break-all;">${customerData.email}</span>
                                 </div>
                                 <div class="info-item">
                                     <span class="info-label">Phone:</span>
-                                    <span>${customerData.phone}</span>
+                                    <span class="info-value">${customerData.phone}</span>
                                 </div>
                                 ${customerData.address ? `
                                 <div class="info-item">
                                     <span class="info-label">Address:</span>
-                                    <span>${customerData.address}</span>
+                                    <span class="info-value">${customerData.address}</span>
                                 </div>
                                 ` : ''}
                             </div>
