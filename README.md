@@ -4196,6 +4196,13 @@
             .logo {
                 margin-bottom: 0;
             }
+           .invoice-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+
         }
         .invoice-title {
             font-size: 24px;
